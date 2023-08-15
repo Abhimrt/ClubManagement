@@ -1,12 +1,13 @@
 "use client"
 import Link from 'next/link'
 import React from 'react'
-import app from "@/firebase/initializer"
+import auth from "@/firebase/initializer"
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 const page = () => {
-    const auth = getAuth(app);
+    // const auth = getAuth(app);
     const Signup = () => {
+        console.log(auth)
         const email = "abhisingadsfha1l112001@gmail.com"
         const password = "Abhi1234@"
         let create = createUserWithEmailAndPassword(auth, email, password)

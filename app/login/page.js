@@ -1,7 +1,31 @@
+"use client"
 import Link from 'next/link'
 import React from 'react'
+import auth from '@/firebase/initializer';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
-const Login = () => {
+const page = () => {
+
+    // const auth = getAuth(app);
+    const login = ()=> {
+        const email = "abhisinghal112001@gmail.com"
+        const password = "Abhi1234@"
+        signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+            console.log("Looged in");
+            console.log(user)
+            // ..
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log("Error code",errorCode)
+            console.log("Error Message", errorMessage )
+        });
+    }
+
   return (
     <main className='center h-screen w-screen'>
         <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow-lg sm:p-6 md:p-8">
@@ -24,7 +48,7 @@ const Login = () => {
             </div>
             <a href="#" className="ml-auto text-sm text-blue-700 hover:underline ">Lost Password?</a>
         </div>
-        <button type="submit" className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Login to your account</button>
+        <button type="submit" onClick={login} className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Login to your account</button>
         <div className="text-sm font-medium text-gray-500">
             Not registered? <Link href="/signup" className="text-blue-700 hover:underline">Create account</Link>
         </div>
@@ -37,4 +61,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default page

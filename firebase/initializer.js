@@ -1,5 +1,6 @@
 "use client"
 import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
 const firebaseConfig = {
     apiKey: "AIzaSyBMV9rGl22SC6bEpvufaMoF0R8KQbKOWK0",
     authDomain: "clubmangement-dbf41.firebaseapp.com",
@@ -11,4 +12,5 @@ const firebaseConfig = {
   };
 
   const app = initializeApp(firebaseConfig);
-  export default app
+  const auth = getAuth(app);
+  export default auth
