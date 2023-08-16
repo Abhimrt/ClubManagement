@@ -7,7 +7,7 @@ const NewPost = [
     },
     {
         name:"image",
-        placeH:"https://drive.google.com/file/d/1-Tb7D4_6",
+        placeH:"https://drive.google.com/file/d/1-Tb7Dw/view?usp=sharing",
         type:"text",
         title:"Image Link"
     },
@@ -25,7 +25,7 @@ const NewPost = [
         title:"Time"
     },
     {
-        name:"Location",
+        name:"location",
         placeH:"AUDI 4",
         type:"text",
         title:"Location"
@@ -34,7 +34,9 @@ const NewPost = [
         name:"contact",
         placeH:"9245XXXXXX",
         type:"number",
-        title:"Contact"
+        title:"Contact",
+        min:"1000000000",
+        max:"9999999999"
     },
 ]
 

@@ -1,13 +1,13 @@
-import React from 'react'
+import React from "react";
 
 const Hr = () => {
   return (
-    <div className='max-w-[70vw] sm:max-w-lg  py-10 center'>
-        <div className=' bg-slate-400 center overflow-visible max-w-xl w-[100vw] h-[2px] relative '>
-            <p className=' w-fit  bg-white px-5 text-xl text-blue-600' >25/4/2021</p>
-        </div>
+    <div className="w-[85vw] sm:w-[60vw] lg:w-[50vw] xl:w-[40vw] center">
+      <hr className="w-1/3 h-[1.5px] my-8 bg-gray-400 border-0 " />
+      <p className=" px-3 font-medium text-xl text-blue-600 mx-1">25/4/2021</p>
+      <hr className="w-1/3 h-[1.5px] my-8 bg-gray-400 border-0 " />
     </div>
-  )
-}
+  );
+};
 
-export default Hr
+export default Hr;

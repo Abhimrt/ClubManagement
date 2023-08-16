@@ -7,8 +7,17 @@
   overflow-x: hidden;
   box-sizing: border-box;
 }
-
+body{
+  background-image: url("/images/back.jpeg")
+}
 .center{
   @apply flex justify-center items-center;
 }
+.profile-table a{
+  color: blue;
+}
+.profile-table td{
+  padding-left: 10px
+}
+
 
