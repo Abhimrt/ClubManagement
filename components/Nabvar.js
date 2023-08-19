@@ -9,7 +9,7 @@ const Nabvar = () => {
   return (
     <>
         <div className="w-full h-10  center m-4 py-5 sm:p-10 overflow-hidden">
-      <div className="text-2xl font-medium ">MIET Club Events</div>
+      <Link href={"/"} className="text-2xl font-medium text-gray-700 hover:text-black ">MIET Club Events</Link>
       <div className=" grow flex justify-end items-center ">
         {!user ? (
           <>

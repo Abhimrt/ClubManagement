@@ -2,9 +2,11 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 const page = () => {
   const {  signup } = useAuth();
+  const router = useRouter();
   
 
   const handleSignup = async (e) => {
@@ -20,6 +22,7 @@ const page = () => {
     }
     try {
       await signup(email, password);
+      router.push("/signup/verification")
     } catch (err) {
       console.log(err);
     }

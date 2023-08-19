@@ -6,6 +6,7 @@ import { useAuth } from "@/context/AuthContext";
 
 export default function Home() {
   const {user} = useAuth();
+  console.log(user)
   return (
       <main className="center min-h-screen w-screen flex-col p-5 ">
         {user && <NewPost/>}

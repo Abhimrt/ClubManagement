@@ -9,18 +9,17 @@ const ProtectedRoute = ({ children }) => {
   const pathname = usePathname()
   const noAuthRequired = [ '/login', '/signup']
 
-  useEffect(() => {
-
-    if (user) {
-        if(noAuthRequired.includes(pathname)){
-            router.push('/')
-        }
-    }else{
-        if(!noAuthRequired.includes(pathname) || pathname !== "/"){
-            router.push('/')
-        }
-    }
-  }, [router, user])
+  // useEffect(() => {
+  //   if (user) {
+  //       if(noAuthRequired.includes(pathname)){
+  //           router.push('/')
+  //       }
+  //   }else{
+  //       if(!noAuthRequired.includes(pathname) && pathname !== "/"){
+  //           router.push('/')
+  //       }
+  //   }
+  // }, [router, user])
 
   return <>{children}</>
 }

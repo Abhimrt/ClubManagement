@@ -66,6 +66,11 @@ const page = () => {
             Login to your account
           </button>
           <div className="text-sm font-medium text-gray-500">
+            <Link href="/forgot" className="text-blue-700 hover:underline">
+              Forget Password
+            </Link>
+          </div>
+          <div className="text-sm font-medium text-gray-500">
             Not registered?{" "}
             <Link href="/signup" className="text-blue-700 hover:underline">
               Create account
