@@ -8,10 +8,12 @@ import {
   sendEmailVerification,
   sendPasswordResetEmail,
 } from 'firebase/auth'
-import auth from '@/firebase/initializer'
+import {auth, db} from '@/firebase/initializer'
 import { useRouter } from 'next/navigation'
+import { collection, getDocs } from 'firebase/firestore'
 
 const AuthContext = createContext({})
+
 
 export const useAuth = () => useContext(AuthContext)
 
@@ -22,6 +24,11 @@ export const AuthContextProvider = ({children}) => {
 
 //   Check weather the user was logedin or not
   useEffect(() => {
+    console.log(db)
+    
+    fetch()
+
+
     const unsubscribe = onAuthStateChanged(auth, async(user) => {
       if (user) {
         setUser(user)
@@ -39,6 +46,16 @@ export const AuthContextProvider = ({children}) => {
 
     return () => unsubscribe()
   }, [])
+
+  // 
+  const fetch = async()=>{
+    await getDocs(collection(db, "testing"))
+            .then((querySnapshot)=>{               
+                const newData = querySnapshot.docs
+                    .map((doc) => ({...doc.data(), id:doc.id }));             
+                console.log( newData);
+            }).catch((e)=>console.log(e))
+  }
 
 
 //   Signup
