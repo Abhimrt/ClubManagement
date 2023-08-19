@@ -17,6 +17,7 @@ const page = () => {
       router.push("/");
     } catch (err) {
       console.log(err);
+      alert(err)
     }
   };
 

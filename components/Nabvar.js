@@ -2,6 +2,7 @@
 import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
 import React from "react";
+import Image from "next/image";
 
 const Nabvar = () => {
   const { logout, user } = useAuth();
@@ -9,7 +10,7 @@ const Nabvar = () => {
   return (
     <>
         <div className="w-full h-10  center m-4 py-5 sm:p-10 overflow-hidden">
-      <Link href={"/"} className="text-2xl font-medium text-gray-700 hover:text-black ">MIET Club Events</Link>
+      <Link href={"/"} className="text-2xl font-medium text-gray-700 hover:text-black ">  Club Events</Link>
       <div className=" grow flex justify-end items-center ">
         {!user ? (
           <>
@@ -29,13 +30,16 @@ const Nabvar = () => {
             </Link>
           </>
         ) : (
-          <button
+          <div className="center mr-10 sm:mr-0">
+            <button
             type="button"
             onClick={logout}
-            className="scale-75 sm:scale-100 mr-8 sm:mr-2 text-white bg-blue-700 hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 focus:outline-none "
+            className="scale-75 sm:scale-100  text-white bg-blue-700 hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none "
           >
             Logout
           </button>
+          <Link href={"/signup/info"} className="rounded-full aspect-square w-10 overflow-hidden"><Image  title={user.displayName?user.displayName:"User"} src={user.photoURL?user.photoURL:"https://drive.google.com/uc?id=1HOz9fhwMvUXHSMBWPG6sDKB4S-Itehtg"} alt="u" width={40} height={40} /></Link>
+          </div>
         )}
       </div>
     </div>

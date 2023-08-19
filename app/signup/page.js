@@ -25,6 +25,7 @@ const page = () => {
       router.push("/signup/verification")
     } catch (err) {
       console.log(err);
+      alert(err)
     }
 
   };
