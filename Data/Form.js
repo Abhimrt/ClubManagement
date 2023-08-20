@@ -38,6 +38,18 @@ const NewPost = [
         min:"1000000000",
         max:"9999999999"
     },
+    {
+        name:"Mode",
+        placeH:"online/offline",
+        type:"text",
+        title:"Mode"
+    },
+    {
+        name:"link",
+        placeH:"form link",
+        type:"text",
+        title:"Registration"
+    },
 ]
 
 export  {NewPost}

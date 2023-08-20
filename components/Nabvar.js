@@ -38,7 +38,7 @@ const Nabvar = () => {
           >
             Logout
           </button>
-          <Link href={"/signup/info"} className="rounded-full aspect-square w-10 overflow-hidden"><Image  title={user.displayName?user.displayName:"User"} src={user.photoURL?user.photoURL:"https://drive.google.com/uc?id=1HOz9fhwMvUXHSMBWPG6sDKB4S-Itehtg"} alt="u" width={40} height={40} /></Link>
+          <Link href={"/signup/info"} className="rounded-full aspect-square w-10 overflow-hidden mx-2 border shadow-sm border-gray-300 border-2"><Image  title={user.displayName?user.displayName:"User"} src={user.photoURL?user.photoURL:"https://drive.google.com/uc?id=1HOz9fhwMvUXHSMBWPG6sDKB4S-Itehtg"} alt="u" width={40} height={40} /></Link>
           </div>
         )}
       </div>

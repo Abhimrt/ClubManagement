@@ -1,10 +1,34 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NewPost } from "@/Data/Form";
 import Image from "next/image";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 const page = () => {
+
+  const {clubData} = useAuth();
+  const router= useRouter()
+  const [headings, setheadings] = useState(
+    {name:"",
+    photo:""}
+  )
+
+  useEffect(() => {
+    if(clubData){
+      setheadings(
+        {
+          name:clubData.clubName,
+          photo:clubData.photoURL
+        }
+      )
+    }else{
+      router.push("/");
+    }
+  }, [clubData])
+  
+
   // {
   //   const a =
   //     "https://drive.google.com/file/d/1SQ7ttMeU76uCBGJCOHS9VKOkhg5A5sxw/view?usp=sharing";
@@ -39,8 +63,8 @@ const page = () => {
           title="CXI"
         >
           <Image
-            className="rounded-full border-2"
-            src="/images/user.jpeg"
+            className="rounded-full border border-gray-400 border-2 aspect-square"
+            src={headings.photo}
             alt=""
             width={60}
             height={60}
@@ -49,7 +73,7 @@ const page = () => {
             href="#"
             className="mx-2 font-medium text-lg sm:text-xl  text-gray-900"
           >
-            COLLABORATION x INNOVATION
+            {headings.name}
           </a>
           <span>New Post</span>
         </div>
@@ -76,7 +100,7 @@ const page = () => {
               htmlFor="details"
               className="block m-2 p-2 text-md font-medium text-gray-900 whitespace-nowrap "
             >
-              Description
+              Description<span className="text-red-600 text-xl">*</span>
             </label>
             <textarea
               name={"details"}
@@ -105,7 +129,7 @@ const FormPart = ({ name, placeH, type, title, min, max }) => {
         htmlFor={name}
         className="block m-2 p-2 text-md font-medium text-gray-900 whitespace-nowrap "
       >
-        {title}
+        {title}<span className="text-red-600 text-xl">*</span>
       </label>
       <input
         type={type}
