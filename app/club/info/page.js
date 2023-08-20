@@ -52,6 +52,7 @@ const page = () => {
           .split("/")
           .at(-2)}`}
     }
+    data = {...data,updatedTime:new Date()}
     console.log(data)
     try {
       if (clubData) {
