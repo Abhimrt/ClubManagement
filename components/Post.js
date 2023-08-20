@@ -41,22 +41,27 @@ const Post = () => {
                     <div className="max-w-xl bg-white border border-gray-200 rounded-lg shadow-lg my-5 hover:shadow-2xl duration-150" key={i}>
                         <Image className="rounded-t-lg h-full w-full" src={e.image} alt="" width={400} height={300} />
                         <div className="p-5 ">
-                            <Link href='profile' className='my-2 flex items-center' title='CXI'>
+                            <Link href={`/club/${e.uid}`} className='my-2 flex items-center' title='CXI'>
                                 <Image className="rounded-full border-2" src={e.logo} alt="" width={60} height={60} />
                                 <span className='mx-2 font-medium text-lg sm:text-xl  text-gray-900'>{e.clubName}</span>
                             </Link>
                             <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">{e.name} </h5>
-                            <div className='flex flex-wrap justify-between items-center text-lg text-gray-700 my-2'>
+                            <div className='flex flex-wrap justify-between items-center text-lg text-gray-900 my-2'>
                                 <p>Date: <span className='text-blue-700'>{e.date}</span></p>
                                 <p className='mx-5'>Time: <span className='text-blue-700' >{tConv24(e.time)}</span></p>
 
                             </div>
-                            <div className='flex flex-wrap justify-evenly items-center text-lg text-gray-700 my-2'>
+                            <div className='flex flex-wrap justify-between items-center text-lg text-gray-900 my-2'>
                                 <p className=''>Location: <span className='text-blue-700' > {e.location}</span></p>
                                 <p className='mx-5'>Contact: <span className='text-blue-700' > {e.contact}</span></p>
 
                             </div>
-                            <p className="mb-3 font-normal text-gray-700">{e.details.split("<br/>").map((para, ind) => (<span key={ind}>{para}<br /></span>))} </p>
+                            <div className='flex flex-wrap justify-between items-center text-lg text-gray-900 my-2'>
+                                <p className=''>Mode: <span className='text-blue-700' > {e.mode}</span></p>
+                                <p className='mx-5'>Registration: <a href={"e.link"} className='text-blue-700' > click me</a></p>
+
+                            </div>
+                            <p className="mb-3 font-normal text-gray-600">{e.details.split("<br/>").map((para, ind) => (<span key={ind}>{para}<br /></span>))} </p>
 
                             {/* <div className='w-full p-2'>
                     <AiOutlineLike className='text-3xl'/>

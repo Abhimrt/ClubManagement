@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { NewPost } from "@/Data/Form";
 import Image from "next/image";
-import ProtectedRoute from "@/components/ProtectedRoute";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 
@@ -71,7 +70,7 @@ const page = () => {
   };
 
   return (
-    <ProtectedRoute>
+    <>
       <div
         className="my-4 flex items-center m-auto w-fit flex-wrap justify-center"
         title="CXI"
@@ -132,8 +131,7 @@ const page = () => {
           Add Event
         </button>
       </form>
-
-    </ProtectedRoute>
+    </>
   );
 };
 

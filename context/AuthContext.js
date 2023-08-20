@@ -21,6 +21,7 @@ export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null); // user data
   const [clubData, setclubData] = useState(null); // if the person is the club verified
   const [events, setevents] = useState(null); // all the events data
+  const [clubs, setclubs] = useState(null); // all the clubs data
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
@@ -29,9 +30,9 @@ export const AuthContextProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       await fetchEvents()
       if (user) {
+        console.log(user)
         setUser(user);
         await fetchClub(user.uid)
-        // console.log(user)
 
         // user is not verified yet
         if (!user.emailVerified) {
@@ -104,7 +105,7 @@ export const AuthContextProvider = ({ children }) => {
 
   // user set data
   const setUserData = (data) => {
-    data = { ...data, createdTime: new Date() }
+    data = { ...data, createdTime: new Date(), email: user.email }
     return setDoc(doc(db, "club", user.uid), data);
   };
 
@@ -117,6 +118,7 @@ export const AuthContextProvider = ({ children }) => {
 
   // fetch data
   const fetchEvents = async () => {
+    // all events data
     await getDocs(collection(db, "events"))
       .then((querySnapshot) => {
         const newData = querySnapshot.docs.map((doc) => ({
@@ -125,6 +127,19 @@ export const AuthContextProvider = ({ children }) => {
         }));
         // console.log(newData);
         setevents(newData);
+      })
+      .catch((e) => console.log(e));
+
+    // all club data
+    await getDocs(collection(db, "club"))
+      .then((querySnapshot) => {
+        const newData = {};
+
+        querySnapshot.docs.forEach((doc) => {
+          newData[doc.id] = doc.data();
+        });
+        console.log(newData);
+        setclubs(newData);
       })
       .catch((e) => console.log(e));
   };
@@ -141,16 +156,14 @@ export const AuthContextProvider = ({ children }) => {
     return addDoc(collection(db, "events"), data);
   };
 
-  // // user update data
-  // const updateUserData = (data) => {
-  //   return  updateDoc(doc(db, "club", user.uid), data);
-  // };
-
-
+  // fetch data for any database =========================
+  const fetchDataId = async (uid, database) => {
+    return await getDoc(doc(db, database, uid))
+  };
 
   return (
     <AuthContext.Provider
-      value={{ user, clubData, events, login, signup, logout, forgot, verify, setUserData, updateAuth, updateUserData, fetchClub, setEventData }}
+      value={{ user, clubData, events, clubs, login, signup, logout, forgot, verify, setUserData, updateAuth, updateUserData, fetchClub, setEventData, fetchDataId }}
     >
       {loading ? null : children}
     </AuthContext.Provider>
