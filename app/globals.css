@@ -21,3 +21,47 @@ body{
 }
 
 
+/* alert box */
+.AletContainer {
+  @apply w-[80vw] sm:w-[50vw];
+  height: 60vh;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  border-radius: 44px;
+  background: #e0e0e0;
+  margin:  auto;
+  /* margin-bottom: 4rem; */
+  box-shadow: 27px 27px 64px #a6a6a6, -27px -27px 44px #bab9b9;
+  flex-direction: column;
+}
+.AlertUpper{
+    width: 8rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    margin-bottom: 2rem;
+background: linear-gradient(145deg, #cacaca, #f0f0f0);
+box-shadow:  28px 28px 65px #656565,
+             -28px -28px 65px #ffffff;
+}
+.AlertBottom h3{
+    padding: 2rem 0;
+    font-size: 1rem;
+    font-weight: 600;
+}
+.AlertBack{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 998;
+    background-color: rgba(0, 0, 0, 0.4);
+    
+}
+.AlertClose{
+    position: absolute;
+    bottom: 2rem;
+}

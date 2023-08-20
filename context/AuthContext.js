@@ -11,7 +11,15 @@ import {
 } from "firebase/auth";
 import { auth, db } from "@/firebase/initializer";
 import { useRouter } from "next/navigation";
-import { addDoc, collection, doc, getDoc, getDocs, setDoc, updateDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 
 const AuthContext = createContext({});
 
@@ -28,21 +36,17 @@ export const AuthContextProvider = ({ children }) => {
   //   Check weather the user was logged in or not
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      await fetchEvents()
+      await fetchEvents();
       if (user) {
-        console.log(user)
+        console.log(user);
         setUser(user);
-        await fetchClub(user.uid)
+        await fetchClub(user.uid);
 
         // user is not verified yet
         if (!user.emailVerified) {
-          setLoading(false);
-          return router.push("/signup/verification");
-        }
-
-        if (user.displayName == null) {
-          setLoading(false);
-          return router.push("/signup/info")
+          router.push("/signup/verification");
+        } else if (user.displayName == null) {
+          router.push("/signup/info");
         }
       } else {
         setUser(null);
@@ -81,23 +85,21 @@ export const AuthContextProvider = ({ children }) => {
     return sendEmailVerification(auth.currentUser);
   };
 
-  //update user 
+  //update user
   const updateAuth = (data) => {
-    if (auth.currentUser)
-      return updateProfile(auth.currentUser, data);
-    alert("First Login")
-  }
-
+    if (auth.currentUser) return updateProfile(auth.currentUser, data);
+    alert("First Login");
+  };
 
   // database apis for club data  =====================================
 
   // fetch data
   const fetchClub = async (e) => {
-    const uid = e ? e : user.uid
+    const uid = e ? e : user.uid;
     if (uid) {
       await getDoc(doc(db, "club", uid))
         .then((e) => {
-          setclubData(e.data())
+          setclubData(e.data());
         })
         .catch((e) => console.log(e));
     }
@@ -105,7 +107,7 @@ export const AuthContextProvider = ({ children }) => {
 
   // user set data
   const setUserData = (data) => {
-    data = { ...data, createdTime: new Date(), email: user.email }
+    data = { ...data, createdTime: new Date(), email: user.email };
     return setDoc(doc(db, "club", user.uid), data);
   };
 
@@ -151,19 +153,53 @@ export const AuthContextProvider = ({ children }) => {
       postedTime: new Date(),
       uid: user.uid,
       clubName: clubData.clubName,
-      logo: clubData.photoURL
-    }
+      logo: clubData.photoURL,
+    };
     return addDoc(collection(db, "events"), data);
   };
 
   // fetch data for any database =========================
   const fetchDataId = async (uid, database) => {
-    return await getDoc(doc(db, database, uid))
+    return await getDoc(doc(db, database, uid));
   };
+
+  // alert ======================================
+  // alert content start
+  const [showAlert, setshowAlert] = useState(false);
+  const [textAlert, settextAlert] = useState("");
+  const [warnAlert, setwarnAlert] = useState(1);
+  const alertN = (text, warn) => {
+    settextAlert(text);
+    setwarnAlert(warn);
+    setshowAlert(true);
+  };
+  // show, setShow, text,warn1
+  // alert content end
 
   return (
     <AuthContext.Provider
-      value={{ user, clubData, events, clubs, login, signup, logout, forgot, verify, setUserData, updateAuth, updateUserData, fetchClub, setEventData, fetchDataId }}
+      value={{
+        user,
+        alertN,
+        showAlert,
+        setshowAlert,
+        textAlert,
+        warnAlert,
+        clubData,
+        events,
+        clubs,
+        login,
+        signup,
+        logout,
+        forgot,
+        verify,
+        setUserData,
+        updateAuth,
+        updateUserData,
+        fetchClub,
+        setEventData,
+        fetchDataId,
+      }}
     >
       {loading ? null : children}
     </AuthContext.Provider>

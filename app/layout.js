@@ -3,6 +3,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import Nabvar from "@/components/Nabvar";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import Alert from "@/components/Alert";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,6 +20,7 @@ export default function RootLayout({ children }) {
           <ProtectedRoute>
             <Nabvar />
             {children}
+            <Alert/>
           </ProtectedRoute>
         </AuthContextProvider>
       </body>

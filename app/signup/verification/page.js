@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 
 const page = () => {
 
-    const { user, verify } = useAuth();
+    const { user, verify,alertN } = useAuth();
     const router = useRouter();
     const [message, setmessage] = useState("Processing your information")
 
@@ -14,19 +14,22 @@ const page = () => {
         if (user!==null && user.emailVerified) {
             router.push("/");
         }else{
+            
             setmessage("You were not verified please verify your mail through mail. If you didn't found any mail then click on the below button.")
         }
     }, [])
 
     const sendMail = async()=>{
         if(user.emailVerified){
-            router("/")
+            router("/signup/info")
         }else{
             try {
                 await verify();
+                alertN("A verification mail sent to your email id.",2)
                 setmessage("A verification mail sent to your email id. Please verify your mail and then refresh this page.")
             } catch (err) {
                 console.log(err);
+                alertN(err,1)
             }
         }
     }

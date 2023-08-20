@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 
 const page = () => {
-    const { user,updateAuth } = useAuth();
+    const { user,updateAuth,alertN } = useAuth();
     const router = useRouter();
     const [info, setinfo] = useState({
       displayName:"",
@@ -38,7 +38,7 @@ const page = () => {
         router.push("/")
       } catch (err) {
         console.log(err);
-        alert(err)
+        alertN(err,1)
       }
   
     };
