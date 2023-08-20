@@ -48,9 +48,11 @@ const page = () => {
     let data = info
     if (!info.photoURL.startsWith("https://drive.google.com/uc?id=")) {
       console.log("first")
-      data = {...info,photoURL:`https://drive.google.com/uc?id=${e.target.photo.value
+      data = {
+        ...info, photoURL: `https://drive.google.com/uc?id=${e.target.photo.value
           .split("/")
-          .at(-2)}`}
+          .at(-2)}`
+      }
     }
     console.log(data)
     try {
