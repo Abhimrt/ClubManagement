@@ -30,14 +30,17 @@ export const AuthContextProvider = ({ children }) => {
         setUser(user);
         await fetchClub(user.uid)
         await fetchEvents()
+        console.log(user)
 
         // user is not verified yet
         if (!user.emailVerified) {
-          router.push("/signup/verification");
+          setLoading(false);
+         return router.push("/signup/verification");
         }
 
         if(user.displayName == null){
-          router.push("/signup/info")
+          setLoading(false);
+          return router.push("/signup/info")
         }
       } else {
         setUser(null);
