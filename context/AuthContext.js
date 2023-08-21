@@ -31,6 +31,7 @@ export const AuthContextProvider = ({ children }) => {
   const [events, setevents] = useState(null); // all the events data
   const [clubs, setclubs] = useState(null); // all the clubs data
   const [Loading, setLoading] = useState(true);
+  const [showChild, setshowChild] = useState(true)
   const router = useRouter();
 
   //   Check weather the user was logged in or not
@@ -38,8 +39,6 @@ export const AuthContextProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setLoading(true)
       await fetchEvents();
-      console.log(db)
-      console.log(clubs)
       if (user) {
         setUser(user);
         await fetchClub(user.uid);
@@ -54,6 +53,7 @@ export const AuthContextProvider = ({ children }) => {
         setUser(null);
       }
       setLoading(false);
+      setshowChild(false)
     });
 
     return () => unsubscribe();
@@ -124,6 +124,20 @@ export const AuthContextProvider = ({ children }) => {
 
   // fetch data
   const fetchEvents = async () => {
+
+    // all club data
+    await getDocs(collection(db, "club"))
+      .then((querySnapshot) => {
+        const newData = {};
+
+        querySnapshot.docs.forEach((doc) => {
+          newData[doc.id] = doc.data();
+        });
+        // console.log(newData);
+        setclubs(newData)
+      })
+      .catch((e) => console.log(e));
+
     // all events data
     await getDocs(collection(db, "events"))
       .then((querySnapshot) => {
@@ -136,18 +150,7 @@ export const AuthContextProvider = ({ children }) => {
       })
       .catch((e) => console.log(e));
 
-    // all club data
-    await getDocs(collection(db, "club"))
-      .then((querySnapshot) => {
-        const newData = {};
 
-        querySnapshot.docs.forEach((doc) => {
-          newData[doc.id] = doc.data();
-        });
-        // console.log(newData);
-        setclubs(newData);
-      })
-      .catch((e) => console.log(e));
   };
 
   // user set event data
@@ -208,7 +211,7 @@ export const AuthContextProvider = ({ children }) => {
         setLoading
       }}
     >
-      {children}
+      {showChild ? <></> : children}
     </AuthContext.Provider>
   );
 };
