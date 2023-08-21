@@ -7,11 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-      },
+      animation: {
+        'ping-slow': 'ping 1.2s linear infinite .3s',
+      }
     },
   },
   plugins: [],

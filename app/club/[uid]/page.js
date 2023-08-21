@@ -48,9 +48,9 @@ const page = ({ params }) => {
                         </div>
 
                         {/* about section */}
-                        <div className="flex justify-center  items-center flex-col sm:flex-row sm:mx-10">
+                        <div className="flex justify-center  items-center flex-col lg:flex-row sm:mx-10">
                             {/* official box */}
-                            <div className="m-4 w-[92vw] sm:w-1/2 self-stretch bg-white rounded-lg p-4 shadow-md">
+                            <div className="m-4 w-[92vw] lg:w-1/2 self-stretch bg-white rounded-lg p-4 shadow-md">
                                 <h3 className="text-xl font-medium underline underline-offset-4 decoration-gray-400 mb-2">
                                     Official
                                 </h3>
@@ -77,7 +77,7 @@ const page = ({ params }) => {
                                 </table>
                             </div>
                             {/* contact us box */}
-                            <div className="m-4 w-[92vw] sm:w-1/2 self-stretch bg-white rounded-lg p-4 shadow-md">
+                            <div className="m-4 w-[92vw] lg:w-1/2 self-stretch bg-white rounded-lg p-4 shadow-md">
                                 <h3 className="text-xl font-medium underline underline-offset-4 decoration-gray-400 mb-2">
                                     Contact Us
                                 </h3>
@@ -138,7 +138,6 @@ const page = ({ params }) => {
 
                         {/* post of the club */}
                         <main className="center min-h-screen w-screen flex-col p-5 ">
-                            <Hr />
                             <Post id = {params.uid}/>
                         </main>
                     </div >

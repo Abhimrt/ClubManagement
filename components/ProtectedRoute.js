@@ -31,7 +31,7 @@ const ProtectedRoute = ({ children }) => {
   const { user } = useAuth()
   const router = useRouter()
   const pathname = usePathname()
-  const noAuthRequired = ["/", "/signup", "/signup/verification", "/signup/info", "/login"]
+  const noAuthRequired = ["/", "/signup", "/signup/verification", "/signup/info", "/login","/contact"]
 
   useEffect(() => {
     if (user) { // logged in
@@ -39,7 +39,7 @@ const ProtectedRoute = ({ children }) => {
         router.push("/signup/verification");
       } else if (user.displayName == null) {
         router.push("/signup/info");
-      } else if (!(pathname == "/") && noAuthRequired.includes(pathname)) {
+      } else if (!((pathname == "/") || (pathname == "/contact")) && noAuthRequired.includes(pathname)) {
         router.push('/')
       }
     } else { // logged out

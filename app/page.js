@@ -7,7 +7,7 @@ export default function Home() {
   const { user,clubData } = useAuth();
   return (
     <main className="center min-h-screen w-screen flex-col p-5 ">
-      {user && clubData && <NewPost image = {clubData.photoURL} uid = {clubData.uid} />}
+      {user && clubData && <NewPost image = {clubData.photoURL} uid = {user.uid} />}
       <Post />
     </main>
   );

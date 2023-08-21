@@ -4,12 +4,13 @@
 
 
 *{
-  /* overflow-x: hidden; */
   box-sizing: border-box;
 }
 body{
+  overflow-x: hidden;
   background-image: url("/images/back.jpeg")
 }
+
 .center{
   @apply flex justify-center items-center;
 }

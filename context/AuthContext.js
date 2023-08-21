@@ -17,8 +17,11 @@ import {
   doc,
   getDoc,
   getDocs,
+  query,
   setDoc,
   updateDoc,
+  where,
+  orderBy
 } from "firebase/firestore";
 
 const AuthContext = createContext({});
@@ -31,34 +34,33 @@ export const AuthContextProvider = ({ children }) => {
   const [events, setevents] = useState(null); // all the events data
   const [clubs, setclubs] = useState(null); // all the clubs data
   const [Loading, setLoading] = useState(true); // for loading animation
-  const [showChild, setshowChild] = useState(true) // tells that data is ready or not it ready then we will render our class 'you can see return of this function"
+  const [showChild, setshowChild] = useState(true); // tells that data is ready or not it ready then we will render our class 'you can see return of this function"
   const router = useRouter();
 
   //   Check weather the user was logged in or not
   useEffect(() => {
-
     // run every time when the login or logout was performed
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      setLoading(true)
+      setLoading(true);
 
       await fetchEvents(); // fetch all the clubs and events
 
       if (user) {
+        // console.log(user);
         setUser(user);
         await fetchClub(user.uid); // if user is authenticate to any of the club then it will call its id
 
         // user is not verified yet
         if (!user.emailVerified) {
           router.push("/signup/verification");
-        } else if (user.displayName == null) { 
+        } else if (user.displayName == null) {
           router.push("/signup/info");
         }
-
       } else {
         setUser(null);
       }
       setLoading(false);
-      setshowChild(false)
+      setshowChild(false);
     });
 
     return () => unsubscribe();
@@ -98,8 +100,6 @@ export const AuthContextProvider = ({ children }) => {
     alertN("First Login", 1);
   };
 
-
-
   // database apis for club data  =====================================
   // at some places [ user == club ]
 
@@ -115,7 +115,7 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
-  // 
+  //
   // user set data
   const setUserData = (data) => {
     data = { ...data, createdTime: new Date(), email: user.email };
@@ -127,37 +127,57 @@ export const AuthContextProvider = ({ children }) => {
     return updateDoc(doc(db, "club", user.uid), data);
   };
 
-
   //event apis ========================================
 
   // fetch data
   const fetchEvents = async () => {
+    if (!clubData) {
+      // all club data
+      await getDocs(collection(db, "club"))
+        .then((querySnapshot) => {
+          const newData = {};
 
-    // all club data
-    await getDocs(collection(db, "club"))
-      .then((querySnapshot) => {
-        const newData = {};
+          querySnapshot.docs.forEach((doc) => {
+            newData[doc.id] = doc.data();
+            newData[doc.id].uid = doc.id;
+          });
+          setclubs(newData);
+        })
+        .catch((e) => console.log(e));
+      //       .where('date', '>=', currentDateString)
+      // .orderBy('date')
+      // .orderBy('time')
+      // .startAt(currentTimeString);
+    }
 
-        querySnapshot.docs.forEach((doc) => {
-          newData[doc.id] = doc.data();
-        });
-        setclubs(newData)
-      })
-      .catch((e) => console.log(e));
-
-    // all events data
-    await getDocs(collection(db, "events"))
-      .then((querySnapshot) => {
-        const newData = querySnapshot.docs.map((doc) => ({
-          ...doc.data(),
-          id: doc.id,
-        }));
-        setevents(newData);
-      })
-      .catch((e) => console.log(e));
+    if (!events) {
+      // all events data
+      await getDocs(
+        query(
+          collection(db, "events"),
+          where("date", ">=", new Date().toISOString().split("T")[0])
+            ,orderBy("date")
+            ,orderBy("time")
+        )
+      )
+        .then((querySnapshot) => {
+          const newData = querySnapshot.docs.map((doc) => ({
+            ...doc.data(),
+            id: doc.id,
+          }));
+          // console.log(newData);
+          // newData.sort((a, b) => {
+          //   const dateA = new Date(a.date);
+          //   const dateB = new Date(b.date);
+          //   return dateA - dateB;
+          // });
+          // console.log("sorted", newData);
+          setevents(newData);
+        })
+        .catch((e) => console.log(e));
+    }
   };
 
- 
   // user set event data
   const setEventData = (data) => {
     data = {
@@ -175,7 +195,6 @@ export const AuthContextProvider = ({ children }) => {
     return await getDoc(doc(db, database, uid));
   };
 
-
   // alert ======================================
   // alert content start
   const [showAlert, setshowAlert] = useState(false);
@@ -188,7 +207,6 @@ export const AuthContextProvider = ({ children }) => {
   };
   // show, setShow, text,warn1
   // alert content end
-
 
   return (
     <AuthContext.Provider
@@ -216,7 +234,7 @@ export const AuthContextProvider = ({ children }) => {
         fetchDataId,
         // loading
         Loading,
-        setLoading
+        setLoading,
       }}
     >
       {/* till the user data is fetching we will not render the child */}

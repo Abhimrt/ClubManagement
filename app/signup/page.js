@@ -21,9 +21,9 @@ const page = () => {
     let Cpassword = e.target.Cpassword.value;
 
     // checking that the mail is of miet or not
-    if (!email.endsWith("miet.ac.in")) {
-      alertN("Enter official collage mail id", 2);
-    }
+    // if (!email.endsWith("miet.ac.in")) {
+    //   alertN("Enter official collage mail id", 2);
+    // }
 
     // checking that both password is same or not
     if (password !== Cpassword) {
