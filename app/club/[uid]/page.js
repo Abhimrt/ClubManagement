@@ -10,14 +10,14 @@ const page = ({ params }) => {
 
     const { clubs } = useAuth()
     const [data, setdata] = useState()
-    const [Loading, setLoading] = useState(true)
+    const [loadPage, setloadPage] = useState(false)
     const router = useRouter()
 
     useEffect(() => {
+        // checking that the id given in the search box is valid or not
         if (clubs[params.uid]) {
-
             setdata(clubs[params.uid])
-            setLoading(!Loading)
+            setloadPage(true)
         } else {
             router.push("/")
         }
@@ -26,11 +26,9 @@ const page = ({ params }) => {
     return (
         <>
             {
-                Loading ? <></> : (
+                !loadPage ? <></> : (
                     <div >
-                        {
-                            console.log(data)
-                        }
+                        {/* name and image of the club */}
                         <div
                             className="my-4 sm:my-6 flex items-center m-auto w-fit flex-wrap justify-center"
                             title={data.clubName}
@@ -42,15 +40,16 @@ const page = ({ params }) => {
                                 width={150}
                                 height={150}
                             />
-                            <a
-                                href="#"
+                            <div
                                 className="m-4 font-medium text-xl sm:text-4xl overflow-hidden  text-gray-900"
                             >
                                 {data.clubName}
-                            </a>
+                            </div>
                         </div>
+
                         {/* about section */}
                         <div className="flex justify-center  items-center flex-col sm:flex-row sm:mx-10">
+                            {/* official box */}
                             <div className="m-4 w-[92vw] sm:w-1/2 self-stretch bg-white rounded-lg p-4 shadow-md">
                                 <h3 className="text-xl font-medium underline underline-offset-4 decoration-gray-400 mb-2">
                                     Official
@@ -77,9 +76,10 @@ const page = ({ params }) => {
                                     </tbody>
                                 </table>
                             </div>
+                            {/* contact us box */}
                             <div className="m-4 w-[92vw] sm:w-1/2 self-stretch bg-white rounded-lg p-4 shadow-md">
                                 <h3 className="text-xl font-medium underline underline-offset-4 decoration-gray-400 mb-2">
-                                    Socials Us
+                                    Contact Us
                                 </h3>
                                 <table className="text-left ml-2 profile-table">
                                     <tbody>
@@ -135,12 +135,11 @@ const page = ({ params }) => {
                                 </table>
                             </div>
                         </div>
+
                         {/* post of the club */}
                         <main className="center min-h-screen w-screen flex-col p-5 ">
                             <Hr />
-                            <Post />
-                            <Post />
-                            <Post />
+                            <Post id = {params.uid}/>
                         </main>
                     </div >
                 )

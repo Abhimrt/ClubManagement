@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 
 const page = () => {
 
-  const { clubData, setEventData, user } = useAuth();
+  const { clubData, setEventData, setLoading,alertN } = useAuth();
   const router = useRouter()
   const [headings, setheadings] = useState(
     {
@@ -27,6 +27,7 @@ const page = () => {
   // })
 
   useEffect(() => {
+    // Means the user is the club authorized or not
     if (clubData) {
       setheadings(
         {
@@ -41,13 +42,15 @@ const page = () => {
 
 
   const submit = async (e) => {
-
+    // checking that the given link is valid or not
     let id = e.image.value.split("/").at(-2);
     if (id === undefined) {
-      alert("Enter a valid Image link");
+      alertN("Enter a valid Image link",2);
       e.image.value = "";
       return;
     }
+
+    // fetching data from the document
     let data = {
       name: e.name.value,
       image: `https://drive.google.com/uc?id=${id}`,
@@ -59,18 +62,24 @@ const page = () => {
       mode: e.mode.value,
       link: e.link.value,
     };
-    console.log(data)
+
+    // promises for the data setting
     try {
-      await setEventData(data);
-      alert("Event added successfully");
+      setLoading(true)
+      await setEventData(data); //api calling
+      setLoading(false)
+      alertN("Event added successfully",3);
+      router.push("/") // after successfully setting the data it redirects to the main page
     } catch (err) {
+      setLoading(false)
       console.log(err);
-      alert(err);
+      alertN(err.message,1);
     }
   };
 
   return (
     <>
+      {/* upper div for the club name and image */}
       <div
         className="my-4 flex items-center m-auto w-fit flex-wrap justify-center"
         title="CXI"
@@ -82,14 +91,16 @@ const page = () => {
           width={60}
           height={60}
         />
-        <a
-          href="#"
+        <div
           className="mx-2 font-medium text-lg sm:text-xl  text-gray-900"
         >
           {headings.name}
-        </a>
+        </div>
         <span>New Post</span>
       </div>
+      {/* upper div close */}
+
+      {/* form start */}
       <form
         className="flex flex-wrap w-screen justify-start sm:justify-center items-center"
         onSubmit={(e) => {
@@ -98,6 +109,7 @@ const page = () => {
 
         }}
       >
+        {/* all input fields */}
         {NewPost.map((e, i) => (
           <FormPart
             name={e.name}
@@ -109,6 +121,8 @@ const page = () => {
             max={e.max ? `${e.max}` : ""}
           />
         ))}
+
+        {/* text area */}
         <div className=" w-[90vw] sm:w-[93vw] m-4  center overflow-visible">
           <label
             htmlFor="details"
@@ -124,17 +138,22 @@ const page = () => {
             required
           />
         </div>
+
+        {/* button to submit the data */}
         <button
           type="submit"
           className="m-4 px-28 text-white bg-blue-500 shadow-md hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm py-2.5 text-center "
         >
           Add Event
         </button>
+
       </form>
+      {/* form end */}
     </>
   );
 };
 
+// this is returning the different inputs as in the data 
 const FormPart = ({ name, placeH, type, title, min, max }) => {
   return (
     <div className="min-w-[45vw] m-4  center overflow-visible">

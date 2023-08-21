@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const page = () => {
-  const { clubData, setUserData, updateUserData, fetchClub } = useAuth();
+  const { clubData, setUserData, updateUserData, fetchClub, setLoading, alertN } = useAuth();
+  
   const router = useRouter();
   const [info, setinfo] = useState({
     clubName: "",
@@ -24,7 +25,9 @@ const page = () => {
     },
   });
 
+
   useEffect(() => {
+    // setting the details of the club that is in the database
     if (clubData) {
       setinfo({
         clubName: clubData.clubName,
@@ -33,42 +36,59 @@ const page = () => {
         social: clubData.social,
       });
     }
-  }, []);
 
+  }, [clubData]);
+
+  // this function will call when you click the submit button
   const handleUpdate = async (e) => {
     e.preventDefault();
+
+    // checking the user passkey 
     if (e.target.passkey.value !== "2008as23#") {
-      alert(
-        "Passkey is not correct please recheck. If you were facing same problem them you can contact us"
+      alertN(
+        "Passkey is not correct please recheck. If you were facing same problem them you can contact us",1
       );
       return;
     }
 
-    // fot the preexisting photo
+    // cloning the info in data so that we can perform different operation easily
     let data = info
+
+    // fot the preexisting photo
     if (!info.photoURL.startsWith("https://drive.google.com/uc?id=")) {
-      console.log("first")
       data = {
         ...info, photoURL: `https://drive.google.com/uc?id=${e.target.photo.value
           .split("/")
           .at(-2)}`
       }
     }
+
+    //  updating the time on which the data is updating
     data = {...data,updatedTime:new Date()}
-    console.log(data)
+  
+    // apis running 
     try {
+      setLoading(true)
+
+      // if there was data is database then we use to update it
       if (clubData) {
         console.log("updating data");
         await updateUserData(data);
-      } else {
+      } else { // if ther is no data in data base we have to set it
         console.log("setting data");
         await setUserData(data);
       }
+
+      // fetching the data that is recently updated in the data base
       fetchClub();
-      alert("Data updated successfully");
+
+      setLoading(false)
+
+      alertN("Data updated successfully",3);
     } catch (err) {
+      setLoading(false)
       console.log(err);
-      alert(err);
+      alertN(err,message,1);
     }
   };
 
@@ -82,6 +102,7 @@ const page = () => {
           <h5 className="text-xl font-medium text-gray-900 mb-5">
             Enter your Club details
           </h5>
+          {/* one row contains 2 column or we can say 2 input box inside it */}
           {/* one row start +++ */}
           <div className="center flex-col sm:flex-row  w-full">
             <div className="m-5 w-full sm:w-1/2">
@@ -125,6 +146,7 @@ const page = () => {
           </div>
           {/* one row end ---- */}
 
+          {/* it was a box which contain the data for officials only */}
           {/* official  start*/}
           {/* name */}
           <h5 className="font-medium">Official</h5>
@@ -234,6 +256,7 @@ const page = () => {
           </div>
           {/* officila end */}
 
+          {/* it was a box which contain the data for social only */}
           {/* social  start*/}
           {/* name */}
           <h5 className="font-medium">Social media</h5>
@@ -336,6 +359,8 @@ const page = () => {
             {/* one row end ---- */}
           </div>
           {/* social end */}
+
+          {/* passkey input box */}
           <div className="m-5 w-full sm:w-1/2">
             <label
               htmlFor="passkey"
@@ -364,13 +389,15 @@ const page = () => {
               .
             </span>
           </div>
+
+          {/* button */}
           <button
             type="submit"
-            // onClick={Signup}
             className="w-full max-w-sm text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
           >
             Update details
           </button>
+          
         </form>
       </div>
     </main>

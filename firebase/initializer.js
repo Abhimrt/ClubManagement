@@ -3,6 +3,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from "firebase/firestore";
 
+// configration data is stored on the cxi@miet.ac.in firebase
 const firebaseConfig = {
   apiKey: "AIzaSyBMV9rGl22SC6bEpvufaMoF0R8KQbKOWK0",
   authDomain: "clubmangement-dbf41.firebaseapp.com",
