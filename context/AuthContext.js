@@ -30,15 +30,15 @@ export const AuthContextProvider = ({ children }) => {
   const [clubData, setclubData] = useState(null); // if the person is the club verified
   const [events, setevents] = useState(null); // all the events data
   const [clubs, setclubs] = useState(null); // all the clubs data
-  const [loading, setLoading] = useState(true);
+  const [Loading, setLoading] = useState(true);
   const router = useRouter();
 
   //   Check weather the user was logged in or not
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      await fetchEvents();
+      setLoading(true)
+      // await fetchEvents();
       if (user) {
-        console.log(user);
         setUser(user);
         await fetchClub(user.uid);
 
@@ -55,7 +55,7 @@ export const AuthContextProvider = ({ children }) => {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [auth.currentUser]);
 
   //authentication base apis ==================================
 
@@ -88,8 +88,10 @@ export const AuthContextProvider = ({ children }) => {
   //update user
   const updateAuth = (data) => {
     if (auth.currentUser) return updateProfile(auth.currentUser, data);
-    alert("First Login");
+    alertN("First Login", 1);
   };
+
+
 
   // database apis for club data  =====================================
 
@@ -199,9 +201,12 @@ export const AuthContextProvider = ({ children }) => {
         fetchClub,
         setEventData,
         fetchDataId,
+        // loading
+        Loading,
+        setLoading
       }}
     >
-      {loading ? null : children}
+      {children}
     </AuthContext.Provider>
   );
 };

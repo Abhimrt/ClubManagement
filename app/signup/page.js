@@ -6,10 +6,11 @@ import { useRouter } from "next/navigation";
 // data to be shown on the screen
 import { signup as renderData } from "@/Data/signup";
 import Alert from "@/components/Alert";
+import Inputdiv from "@/components/Inputdiv";
 
 const page = () => {
 
-  const { signup,alertN } = useAuth(); // api for signup
+  const { signup, alertN, setLoading } = useAuth(); // api for signup
   const router = useRouter();
 
   // function execute when form is submitted
@@ -18,6 +19,11 @@ const page = () => {
     let email = e.target.email.value;
     let password = e.target.password.value;
     let Cpassword = e.target.Cpassword.value;
+
+    // checking that the mail is of miet or not
+    if (!email.endsWith("miet.ac.in")) {
+      alertN("Enter official collage mail id", 2);
+    }
 
     // checking that both password is same or not
     if (password !== Cpassword) {
@@ -32,7 +38,7 @@ const page = () => {
       /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
     if (!password.match(validation)) {
       alertN(
-        "A password between 8 to 15 characters which contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character",2
+        "A password between 8 to 15 characters which contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character", 2
       );
       e.target.password.value = "";
       e.target.Cpassword.value = "";
@@ -41,12 +47,15 @@ const page = () => {
 
     // calling function it gives promises
     try {
+      setLoading(true)
       await signup(email, password);
+      setLoading(false)
       // if user created successfully then we navigate towards verification page
       router.push("/signup/verification");
     } catch (err) {
+      setLoading(false)
       console.log(err);
-      alertN(err,1);
+      alertN(err.message, 1);
     }
   };
 
@@ -60,24 +69,7 @@ const page = () => {
             Sign Up to our platform
           </h5>
           {/* input field div  */}
-          {renderData.map((e, i) => (
-            <div key={i}>
-              <label
-                htmlFor={e.name}
-                className="block mb-2 text-sm font-medium text-gray-900"
-              >
-                {e.title}
-              </label>
-              <input
-                type={e.type}
-                name={e.name}
-                id={e.name}
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
-                placeholder={e.placeholder}
-                required
-              />
-            </div>
-          ))}
+          <Inputdiv data={renderData} />
           {/* input field div end */}
 
           {/* button */}
