@@ -12,9 +12,11 @@ const page = ({ params }) => {
     const [data, setdata] = useState()
     const [Loading, setLoading] = useState(true)
     const router = useRouter()
+    console.log(clubs)
+    console.log((params.uid) in clubs)
 
     useEffect(() => {
-        if (clubs[params.uid]) {
+        if (clubs.hasOwnProperty(params.uid)) {
 
             setdata(clubs[params.uid])
             setLoading(!Loading)

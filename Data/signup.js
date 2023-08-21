@@ -38,5 +38,21 @@ const info = [
         required: false
     }
 ]
+const login = [
+    {
+        name: "email",
+        title: "Your Email",
+        placeholder: "name@miet.ac.in",
+        type: "text",
+        required: true
+    },
+    {
+        name: "password",
+        title: "Your Password",
+        placeholder: "••••••••",
+        type: "password",
+        required: true
+    },
+]
 
-export { signup, info }
+export { signup, info, login }

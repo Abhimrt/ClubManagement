@@ -5,7 +5,6 @@ import React from "react";
 const Loading = () => {
 
     const { Loading } = useAuth();
-    console.log(Loading)
 
     return (
         <>

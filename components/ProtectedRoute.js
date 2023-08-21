@@ -1,25 +1,54 @@
 "use client"
 import { usePathname, useRouter } from 'next/navigation'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAuth } from '../context/AuthContext'
+
+/*
+  non login user
+    "/"
+    "/signup"
+    "/signup/verification"
+    "signup/info"
+    "login"
+
+  login user can't go to the non login user page accept
+  "/"
+  -> special condition if( user.emailVerified == false)
+      "/signup/verification"
+  -> special condition if( user.displayName == null)
+      "/signup/info"
+
+
+      if (!user.emailVerified) {
+          router.push("/signup/verification");
+        } else if (user.displayName == null) {
+          router.push("/signup/info");
+        }
+    
+*/
 
 const ProtectedRoute = ({ children }) => {
   const { user } = useAuth()
   const router = useRouter()
   const pathname = usePathname()
-  const noAuthRequired = [ '/login', '/signup']
+  const noAuthRequired = ["/", "/signup", "/signup/verification", "/signup/info", "/login"]
 
-  // useEffect(() => {
-  //   if (user) {
-  //       if(noAuthRequired.includes(pathname)){
-  //           router.push('/')
-  //       }
-  //   }else{
-  //       if(!noAuthRequired.includes(pathname) && pathname !== "/"){
-  //           router.push('/')
-  //       }
-  //   }
-  // }, [router, user])
+  useEffect(() => {
+    if (user) { // logged in
+      if (!user.emailVerified) {
+        router.push("/signup/verification");
+      } else if (user.displayName == null) {
+        router.push("/signup/info");
+      } else if (!(pathname == "/") && noAuthRequired.includes(pathname)) {
+        router.push('/')
+      }
+    } else { // logged out
+      if (!noAuthRequired.includes(pathname)) {
+        router.push('/')
+      }
+    }
+
+  }, [router, user])
 
   return <>{children}</>
 }

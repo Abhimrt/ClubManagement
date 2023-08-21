@@ -37,7 +37,9 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setLoading(true)
-      // await fetchEvents();
+      await fetchEvents();
+      console.log(db)
+      console.log(clubs)
       if (user) {
         setUser(user);
         await fetchClub(user.uid);
@@ -142,7 +144,7 @@ export const AuthContextProvider = ({ children }) => {
         querySnapshot.docs.forEach((doc) => {
           newData[doc.id] = doc.data();
         });
-        console.log(newData);
+        // console.log(newData);
         setclubs(newData);
       })
       .catch((e) => console.log(e));
