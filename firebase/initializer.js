@@ -5,7 +5,7 @@ import { getFirestore } from "firebase/firestore";
 
 // configration data is stored on the cxi@miet.ac.in firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyBMV9rGl22SC6bEpvufaMoF0R8KQbKOWK0",
+  apiKey: process.env.API_KEY,
   authDomain: "clubmangement-dbf41.firebaseapp.com",
   projectId: "clubmangement-dbf41",
   storageBucket: "clubmangement-dbf41.appspot.com",
