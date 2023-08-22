@@ -1,6 +1,5 @@
 "use client";
 import { useAuth } from "@/context/AuthContext";
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import Hr from "./Hr";
@@ -91,7 +90,7 @@ const Post = ({ id }) => {
                       </p>
                       <p className="mr-5">
                         Registration:{" "}
-                        <a href={e.link} className="text-blue-700">
+                        <a href={e.link} className="text-blue-700" target="_blank">
                           {" "}
                           click me
                         </a>

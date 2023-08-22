@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { NewPost } from "@/Data/Form";
-import Image from "next/image";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import ImageDes from "@/components/ImageDes";
@@ -85,7 +84,7 @@ const page = () => {
         title="CXI"
       >
         {headings.photo && (
-          <Image
+          <img
             className="rounded-full border border-gray-400 border-2 aspect-square"
             src={headings.photo}
             alt=""

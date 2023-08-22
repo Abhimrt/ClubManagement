@@ -2,7 +2,6 @@
 import Hr from "@/components/Hr";
 import Post from "@/components/Post";
 import { useAuth } from "@/context/AuthContext";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
@@ -34,7 +33,7 @@ const page = ({ params }) => {
                             className="my-4 sm:my-6 flex items-center m-auto w-fit flex-wrap justify-center"
                             title={data.clubName}
                         >
-                            <Image
+                            <img
                                 className="rounded-full border-2 shadow-md m-1"
                                 src={data.photoURL}
                                 alt=""

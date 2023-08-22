@@ -1,7 +1,6 @@
 "use client";
 import Hr from "@/components/Hr";
 import { useAuth } from "@/context/AuthContext";
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -35,7 +34,7 @@ const page = () => {
                     className=" border-b bg-gray-800 border-gray-700 hover:bg-gray-600"
                     key={i}
                   >
-                    <td className="px-6 py-4"><Image src={e.photoURL} className="rounded-full shadow-sm w-10 aspect-square" width={40} height={40} alt="photo"/></td>
+                    <td className="px-6 py-4"><img src={e.photoURL} className="rounded-full shadow-sm w-10 aspect-square" width={40} height={40} alt="photo"/></td>
                     <th
                       scope="row"
                       className="px-6 py-4 font-medium whitespace-nowrap text-white"

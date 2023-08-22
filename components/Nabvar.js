@@ -2,7 +2,6 @@
 import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
 import React, { useState } from "react";
-import Image from "next/image";
 
 const Nabvar = () => {
   const { logout, user, clubData } = useAuth();
@@ -12,7 +11,8 @@ const Nabvar = () => {
   return (
     <nav className=" p-4 flex justify-between items-center">
       {/* Left side: Logo */}
-      <Link href={"/"} className="text-gray-700 font-semibold text-xl">
+      <Link href={"/"} className="text-gray-700 font-semibold text-xl center">
+        <img src="/images/logo.png" alt="" className="mr-1" />
         Club Events
       </Link>
 
@@ -68,9 +68,9 @@ const Nabvar = () => {
 
             {/* User Photo and Dropdown */}
             <div className="relative ">
-              <Image
+              <img
                 src={
-                  "https://drive.google.com/uc?id=1xh_OlYclTFCld_vHvAmPrE7EMnWDcFYw"
+                  user.photoURL
                 } // Replace with your user's photo URL
                 alt="User"
                 className="w-8 h-8 rounded-full cursor-pointer "

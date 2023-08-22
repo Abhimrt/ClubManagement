@@ -1,5 +1,3 @@
-
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -9,7 +7,7 @@ const NewPost = ({image,uid}) => {
   return (
     <div className="my-2 flex items-center justify-between w-full max-w-xl">
       <Link href={`/club/${uid}`}>
-        <Image
+        <img
           className="rounded-full border-2 border-gray-300"
           src={image}
           alt=""
