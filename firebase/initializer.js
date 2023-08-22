@@ -1,18 +1,21 @@
-"use client"
+// "use client"
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from "firebase/firestore";
 
 // configration data is stored on the cxi@miet.ac.in firebase
 const firebaseConfig = {
-  apiKey: process.env.API_KEY,
-  authDomain: "clubmangement-dbf41.firebaseapp.com",
+  apiKey: `${process.env.apikey}`,
+  authDomain: `${process.env.authDomain}`,
   projectId: "clubmangement-dbf41",
-  storageBucket: "clubmangement-dbf41.appspot.com",
-  messagingSenderId: "927485682957",
-  appId: "1:927485682957:web:4fbc7db68ccbf8fe817c44",
-  measurementId: "G-H0VH7F0XYQ"
+  storageBucket: `${process.env.storageBucket}`,
+  messagingSenderId: `${process.env.messagingSenderId}`,
+  appId: `${process.env.appId}`,
+  measurementId: `${process.env.measurementId}`
 };
+console.log(process.env.apikey," inti")
+console.log(process.env.messagingSenderId," inti")
+console.log(process.env.authDomain," inti")
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
