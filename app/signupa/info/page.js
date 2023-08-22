@@ -1,14 +1,17 @@
 "use client"
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { info } from '@/Data/signup';
 import Inputdiv from '@/components/Inputdiv';
+import ImageDes from '@/components/ImageDes';
 
 const page = () => {
 
   const { user, updateAuth, alertN, setLoading } = useAuth();
   const router = useRouter();
+  // for image description
+  const [showDes,setshowDes] = useState(false);
 
 
   useEffect(() => {
@@ -17,7 +20,7 @@ const page = () => {
       router.push("/")// if user is not logged in 
     } else if (user.displayName) {
       // it return to the homepage
-      router.push("/")
+      // router.push("/")
     }
   }, [])
 
@@ -27,7 +30,7 @@ const page = () => {
     const data = {
       displayName: e.target.name.value,
       // making url fit for the application if user didn't give any photo it set itself a user photo
-      photoURL: e.target.photo.value.split("/").at(-2) ? `https://drive.google.com/uc?id=${e.target.photo.value.split("/").at(-2)}` : "https://drive.google.com/uc?id=1HOz9fhwMvUXHSMBWPG6sDKB4S-Itehtg"
+      photoURL: e.target.image.value.split("/").at(-2) ? `https://drive.google.com/uc?id=${e.target.image.value.split("/").at(-2)}` : "https://drive.google.com/uc?id=1HOz9fhwMvUXHSMBWPG6sDKB4S-Itehtg"
     }
 
     try {
@@ -52,7 +55,7 @@ const page = () => {
           </h5>
 
           {/* input */}
-          <Inputdiv data={info} />
+          <Inputdiv data={info} setShow={setshowDes} />
 
 
           {/* button for the user */}
@@ -66,6 +69,7 @@ const page = () => {
 
         </form>
       </div>
+      <ImageDes show = {showDes} setShow = {setshowDes}/>
     </main>
   );
 };

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Inputdiv = ({ data }) => {
+const Inputdiv = ({ data,setShow }) => {
     return (
         <>
             {/* input field div  */}
@@ -20,6 +20,7 @@ const Inputdiv = ({ data }) => {
                         placeholder={e.placeholder}
                         required={e.required}
                     />
+                    {e.name == "image" && <span className="text-gray-500 text-sm">Enter a sharable drive link <span className="text-blue-700 cursor-pointer" onClick={()=>setShow(true)}>Know More</span></span>}
                 </div>
             ))}
             {/* input field div end */}

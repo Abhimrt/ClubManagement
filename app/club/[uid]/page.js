@@ -8,17 +8,18 @@ import React, { useEffect, useState } from "react";
 
 const page = ({ params }) => {
 
-    const { clubs } = useAuth()
+    const { clubs ,user, alertN} = useAuth()
     const [data, setdata] = useState()
     const [loadPage, setloadPage] = useState(false)
     const router = useRouter()
 
     useEffect(() => {
         // checking that the id given in the search box is valid or not
-        if (clubs[params.uid]) {
+        if (user && clubs[params.uid]) {
             setdata(clubs[params.uid])
             setloadPage(true)
         } else {
+            alertN("Please Login to access this page.",2)
             router.push("/")
         }
     }, [])

@@ -31,7 +31,7 @@ const info = [
         required: true
     },
     {
-        name: "photo",
+        name: "image",
         title: "Photo",
         placeholder: "https://drive.google.com/file/d/1SQ7ttMeU76Okhg5A5sxw/view?usp=sharing",
         type: "text",

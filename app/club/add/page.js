@@ -4,17 +4,20 @@ import { NewPost } from "@/Data/Form";
 import Image from "next/image";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
+import ImageDes from "@/components/ImageDes";
 
 const page = () => {
+  const { clubData, setEventData, setLoading, alertN } = useAuth();
+  const router = useRouter();
 
-  const { clubData, setEventData, setLoading,alertN } = useAuth();
-  const router = useRouter()
-  const [headings, setheadings] = useState(
-    {
-      name: "",
-      photo: ""
-    }
-  )
+  // for image description
+  const [showDes,setshowDes] = useState(false);
+
+
+  const [headings, setheadings] = useState({
+    name: "",
+    photo: "",
+  });
   // const [info, setinfo] = useState({
   //   eventName:"",
   //   image:"",
@@ -29,23 +32,20 @@ const page = () => {
   useEffect(() => {
     // Means the user is the club authorized or not
     if (clubData) {
-      setheadings(
-        {
-          name: clubData.clubName,
-          photo: clubData.photoURL
-        }
-      )
+      setheadings({
+        name: clubData.clubName,
+        photo: clubData.photoURL,
+      });
     } else {
       router.push("/");
     }
-  }, [clubData])
-
+  }, [clubData]);
 
   const submit = async (e) => {
     // checking that the given link is valid or not
     let id = e.image.value.split("/").at(-2);
     if (id === undefined) {
-      alertN("Enter a valid Image link",2);
+      alertN("Enter a valid Image link", 2);
       e.image.value = "";
       return;
     }
@@ -65,15 +65,15 @@ const page = () => {
 
     // promises for the data setting
     try {
-      setLoading(true)
+      setLoading(true);
       await setEventData(data); //api calling
-      setLoading(false)
-      alertN("Event added successfully",3);
-      router.push("/") // after successfully setting the data it redirects to the main page
+      setLoading(false);
+      alertN("Event added successfully", 3);
+      router.push("/"); // after successfully setting the data it redirects to the main page
     } catch (err) {
-      setLoading(false)
+      setLoading(false);
       console.log(err);
-      alertN(err.message,1);
+      alertN(err.message, 1);
     }
   };
 
@@ -84,16 +84,16 @@ const page = () => {
         className="my-4 flex items-center m-auto w-fit flex-wrap justify-center"
         title="CXI"
       >
-        <Image
-          className="rounded-full border border-gray-400 border-2 aspect-square"
-          src={headings.photo}
-          alt=""
-          width={60}
-          height={60}
-        />
-        <div
-          className="mx-2 font-medium text-lg sm:text-xl  text-gray-900"
-        >
+        {headings.photo && (
+          <Image
+            className="rounded-full border border-gray-400 border-2 aspect-square"
+            src={headings.photo}
+            alt=""
+            width={60}
+            height={60}
+          />
+        )}
+        <div className="mx-2 font-medium text-lg sm:text-xl  text-gray-900">
           {headings.name}
         </div>
         <span>New Post</span>
@@ -106,7 +106,6 @@ const page = () => {
         onSubmit={(e) => {
           e.preventDefault();
           submit(e.target);
-
         }}
       >
         {/* all input fields */}
@@ -119,6 +118,7 @@ const page = () => {
             title={e.title}
             min={e.min ? `${e.min}` : ""}
             max={e.max ? `${e.max}` : ""}
+            setshowDes = {setshowDes}
           />
         ))}
 
@@ -146,22 +146,26 @@ const page = () => {
         >
           Add Event
         </button>
-
       </form>
       {/* form end */}
+
+      <ImageDes show={showDes} setShow={setshowDes} />
     </>
   );
 };
 
-// this is returning the different inputs as in the data 
-const FormPart = ({ name, placeH, type, title, min, max }) => {
+// this is returning the different inputs as in the data
+const FormPart = ({ name, placeH, type, title, min, max,setshowDes }) => {
   return (
-    <div className="min-w-[45vw] m-4  center overflow-visible">
-      <label
+    <>
+        <div className="min-w-[45vw] m-4 center flex-col  overflow-visible">
+     <div className="center w-full">
+     <label
         htmlFor={name}
         className="block m-2 p-2 text-md font-medium text-gray-900 whitespace-nowrap "
       >
-        {title}<span className="text-red-600 text-xl">*</span>
+        {title}
+        <span className="text-red-600 text-xl">*</span>
       </label>
       <input
         type={type}
@@ -173,7 +177,10 @@ const FormPart = ({ name, placeH, type, title, min, max }) => {
         max={max}
         required
       />
+     </div>
+      {name === 'image' && <span className="text-gray-500 text-sm">Enter a sharable drive link <span className="text-blue-700 cursor-pointer" onClick={()=>setshowDes(true)}>Know More</span></span>}
     </div>
+    </>
   );
 };
 

@@ -47,13 +47,16 @@ const page = () => {
             {
                 contributors.map((e,i)=>{
                     return(
-                        <div className=" relative m-5 overflow-hidden">
+                        <div className=" relative m-5 shadow-lg hover:drop-shadow-md overflow-hidden">
                             <div className="absolute opacity-30 animate-ping-slow top-0 -right-5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 w-48 aspect-video rounded-full"></div>
-                            <div className="backdrop-blur-sm bg-white/40 center shadow-md hover:drop-shadow-md px-4 pt-4 rounded-md " key={i}>
+                            <div className="backdrop-blur-sm bg-white/30 center  px-4 pt-4 rounded-md " key={i}>
                                 <Image src={e.image} className="drop-shadow-lg" height={120} width={120} alt="pic"/>
-                                <div className="h-full">
-                                    <h4 className="text-xl font-bold">{e.name}</h4>
-                                    <div className="flex justify-around items-center h-full text-sm font-medium" >
+                                <div className="h-full ml-3">
+                                    <div className="my-5">
+                                      <h4 className="text-xl font-bold">{e.name}</h4>
+                                      <p className="text-[10px] text-gray-500">{e.tags}</p>
+                                    </div>
+                                    <div className="flex justify-around items-center h-full text-[14px] font-medium" >
                                         <a className="text-sky-700 border-gray-500 hover:text-blue-900  hover:border-b-2" href={e.linkedin}>LinkedIn</a>
                                         <a className="text-sky-700 border-gray-500 hover:text-blue-900  hover:border-b-2" href={e.porfolio}>Website</a>
                                         <a className="text-sky-700 border-gray-500 hover:text-blue-900  hover:border-b-2" href={e.github}>Github</a>

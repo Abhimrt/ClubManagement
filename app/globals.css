@@ -21,6 +21,31 @@ body{
   padding-left: 10px
 }
 
+/* scroll bar start*/
+
+/* Works on Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: blue ;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 12px;
+  background-color: transparent;
+}
+
+*::-webkit-scrollbar-track {
+  background: rgb(193, 193, 193) ;
+  border-radius: 20px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: blue;
+  border-radius: 20px;
+}
+
+/* scroll bar end */
 
 /* alert box */
 .AletContainer {

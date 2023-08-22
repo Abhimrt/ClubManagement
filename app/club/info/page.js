@@ -1,4 +1,5 @@
 "use client";
+import ImageDes from "@/components/ImageDes";
 import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -7,7 +8,9 @@ import React, { useEffect, useState } from "react";
 const page = () => {
   const { clubData, setUserData, updateUserData, fetchClub, setLoading, alertN } = useAuth();
   
-  const router = useRouter();
+  // for image description
+  const [showDes,setshowDes] = useState(false);
+
   const [info, setinfo] = useState({
     clubName: "",
     photoURL: "",
@@ -142,7 +145,9 @@ const page = () => {
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 required
               />
+            <span className="text-gray-500 text-sm">Enter a sharable drive link <span className="text-blue-700 cursor-pointer" onClick={()=>setshowDes(true)}>Know More</span></span>
             </div>
+
           </div>
           {/* one row end ---- */}
 
@@ -400,6 +405,7 @@ const page = () => {
           
         </form>
       </div>
+      <ImageDes show = {showDes} setShow = {setshowDes}/>
     </main>
   );
 };
