@@ -48,6 +48,7 @@ const Post = ({ id }) => {
                   alt=""
                   width={400}
                   height={300}
+                  priority="false"
                 />
                 <div className="p-5 ">
                   {/* club detais */}
@@ -90,7 +91,7 @@ const Post = ({ id }) => {
                       </p>
                       <p className="mr-5">
                         Registration:{" "}
-                        <a href={"e.link"} className="text-blue-700">
+                        <a href={e.link} className="text-blue-700">
                           {" "}
                           click me
                         </a>
