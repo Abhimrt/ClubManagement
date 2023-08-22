@@ -42,7 +42,7 @@ const Post = ({ id }) => {
                 className="max-w-xl bg-white border border-gray-200 rounded-lg shadow-lg my-5 hover:shadow-2xl duration-150"
                 key={i}
               >
-                <Image
+                <img
                   className="rounded-t-lg h-full w-full"
                   src={e.image}
                   alt=""
@@ -57,7 +57,7 @@ const Post = ({ id }) => {
                     className="my-2 flex items-center"
                     title="CXI"
                   >
-                    <Image
+                    <img
                       className="rounded-full border-2"
                       src={e.logo}
                       alt=""
